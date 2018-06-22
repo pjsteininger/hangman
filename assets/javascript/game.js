@@ -1,11 +1,16 @@
 $(document).ready(function () {
 
     var hangman = {
-        wordList: ["hello worldl"],
+        wordList: ["Awkward", "Bagpipes", "Banjo", "Bungler", "Croquet", "Crypt", "Dwarves", "Fervid",
+            "Fishhook", "Fjord", "Gazebo", "Gypsy", "Haiku", "Haphazard", "Hyphen", "Ivory", "Jazzy", "Jiffy",
+            "Jinx", "Jukebox", "Kayak", "Kiosk", "Klutz", "Memento", "Mystify", "Numbskull", "Ostracize",
+            "Oxygen", "Pajama", "Phlegm", "Pixel", "Polka", "Quad", "Quip", "Rhythmic", "Rogue", "Sphinx",
+            "Squawk", "Swivel", "Toady", "Twelfth", "Unzip", "Waxy", "Wildebeest", "Yacht", "Zealous",
+            "Zigzag", "Zippy", "Zombie", "Zygote"],
         currentWord: "",
         alphabet: "abcdefghijklmnopqrstuvwxyz",
         guessedLetters: "",
-        initialGuesses: 5,
+        initialGuesses: 10,
         guessesLeft: 0,
         wins: 0,
         losses: 0,
@@ -14,7 +19,8 @@ $(document).ready(function () {
             $(document).on("keyup", function (e) {
                 hangman.letterGuess(e);
             });
-            $("#restart-button").click(function () {
+            $("#restart-button").on("click", function () {
+                $("#restart-button").off("click");
                 $("#the-word").empty();
                 $("#msg-box").empty();
                 $("#guessed-letters").empty();
@@ -25,7 +31,7 @@ $(document).ready(function () {
             $("#guesses-left").text(this.initialGuesses);
             $("#wins-span").text(this.wins);
             $("#losses-span").text(this.losses);
-            this.currentWord = this.wordList[Math.floor(Math.random() * this.wordList.length)];
+            this.currentWord = this.wordList[Math.floor(Math.random() * this.wordList.length)].toLowerCase();
             console.log(this.currentWord);
             this.guessedLetters = "";
             for (var i = 0; i < this.currentWord.length; i++) {
@@ -72,16 +78,17 @@ $(document).ready(function () {
             if (isWin) {
                 this.wins++;
                 $("#msg-box").text("you win. yay.");
-                //$("#wins-span").text(this.wins);
+                $("#wins-span").text(this.wins);
             } else {
                 this.losses++;
                 $("#msg-box").text("you lose. rip");
-                //$("#losses-span").text(this.losses);
+                $("#losses-span").text(this.losses);
             }
             $(document).off("keyup");
         }
 
-    };
+    }
+
     hangman.initializeGame();
 
 });
