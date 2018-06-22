@@ -20,11 +20,23 @@ $(document).ready(function () {
                 hangman.letterGuess(e);
             });
             $("#restart-button").on("click", function () {
-                $("#restart-button").off("click");
-                $("#the-word").empty();
-                $("#msg-box").empty();
-                $("#guessed-letters").empty();
-                hangman.initializeGame();
+                if (hangman.guessesLeft > 0 && $("#the-word").text() !== hangman.currentWord) {
+                    var takeTheL = confirm("Give up?");
+                    if (takeTheL) {
+                        hangman.losses++;
+                        $("#restart-button").off("click");
+                        $("#the-word").empty();
+                        $("#msg-box").empty();
+                        $("#guessed-letters").empty();
+                        hangman.initializeGame();
+                    }
+                } else {
+                    $("#restart-button").off("click");
+                    $("#the-word").empty();
+                    $("#msg-box").empty();
+                    $("#guessed-letters").empty();
+                    hangman.initializeGame();
+                }
             });
             $("#msg-box").text("press any letter to begin guessing.");
             this.guessesLeft = this.initialGuesses;
